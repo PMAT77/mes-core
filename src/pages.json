@@ -47,10 +47,11 @@
       }
     },
     {
-      "path": "pages/about/about",
+      "path": "pages/login/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "关于"
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
       }
     }
   ],
