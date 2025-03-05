@@ -1,8 +1,22 @@
 {
   "tabbar.home": "首页",
-  "tabbar.about": "关于",
-  "app.name": "中文标题",
-  "weight": "{heavy}公斤",
-  "detail": "{0}cm, {1}公斤",
-  "introduction": "我是 {name},身高:{detail.height},体重:{detail.weight}"
+  "tabbar.mine": "关于",
+
+  "app.fullname": "立昱MESCore",
+  "app.name": "立昱",
+  "app.desc": "高效、优雅企业MES移动端平台...",
+
+  "common": {
+    "and": "和",
+    "login": "登录"
+  },
+
+  "pages": {
+    "login": {
+      "welcome": "欢迎",
+      "agree": "已阅读并同意",
+      "termsOfService": "《服务条款》",
+      "privacyPolicy": "《隐私协议》"
+    }
+  }
 }

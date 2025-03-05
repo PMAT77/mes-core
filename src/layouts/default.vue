@@ -1,5 +1,5 @@
 <template>
-  <wd-config-provider :themeVars="themeVars">
+  <wd-config-provider :theme="appStore.theme" :themeVars="themeVars">
     <slot />
     <wd-toast />
     <wd-message-box />
@@ -7,11 +7,16 @@
 </template>
 
 <script lang="ts" setup>
+import { useAppStore } from '@/store/index'
 import type { ConfigProviderThemeVars } from 'wot-design-uni'
 
-const themeVars: ConfigProviderThemeVars = {
-  // colorTheme: 'red',
-  // buttonPrimaryBgColor: '#07c160',
-  // buttonPrimaryColor: '#07c160',
-}
+const appStore = useAppStore()
+
+// 初始化主题
+appStore.initTheme()
+// 监听主题变化
+appStore.onThemeChange()
+appStore.setTheme('dark')
+
+const themeVars: ConfigProviderThemeVars = {}
 </script>

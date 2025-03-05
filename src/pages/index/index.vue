@@ -9,15 +9,12 @@
 </route>
 
 <template>
-  <view
-    class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
-  >
+  <PageContainer class="home" bg-color="#111111" min-height="100vh" :statusBar="false">
     <view class="text-center mt-8">
       当前平台是：
       <text class="text-green-500">{{ PLATFORM.platform }}</text>
     </view>
-  </view>
+  </PageContainer>
 </template>
 
 <script lang="ts" setup>
@@ -26,9 +23,6 @@ import PLATFORM from '@/utils/platform'
 defineOptions({
   name: 'Home',
 })
-
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
 </script>
 
 <style></style>

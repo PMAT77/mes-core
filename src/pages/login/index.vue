@@ -8,20 +8,22 @@
 </route>
 
 <template>
-  <view class="flex justify-center bg-#f2f7fd">
-    <view class="max-w-500px flex flex-col justify-center m-auto pl-80rpx pr-80rpx h-100vh">
-      <header class="mb-80rpx">
-        <view class="font-size-38rpx text-#333333">
-          欢迎
-          <!-- Welcome to -->
+  <view class="login flex justify-center bg-#f2f7fd">
+    <view class="max-w-1000rpx flex flex-col justify-center m-auto pl-80rpx pr-80rpx h-100vh">
+      <view class="header-extra">
+        <!-- <view class="i-carbon-user-avatar text-red" /> -->
+      </view>
+
+      <header class="header mb-80rpx">
+        <view class="font-size-38rpx">
+          {{ t('pages.login.welcome') }}
         </view>
         <view class="font-size-48rpx font-bold mt-10rpx mb-10rpx">
-          <text class="font-bold text-#1a2d7d">立昱MES</text>
+          <text class="font-bold text-primary">{{ t('app.name') }} MES</text>
           <text class="font-bold text-#337667">Core</text>
         </view>
-        <view class="font-size-26rpx text-#333333 w-80%">
-          高效、优雅企业MES移动端平台...
-          <!-- An efficient and elegant enterprise MES mobile terminal... -->
+        <view class="font-size-26rpx w-80%">
+          {{ t('app.desc') }}
         </view>
       </header>
 
@@ -55,26 +57,28 @@
           :loading="loading"
           @click="handleSubmit"
         >
-          登录
+          {{ t('common.login') }}
         </wd-button>
 
         <wd-checkbox
           v-model="model.agreed"
           shape="square"
-          custom-label-class="flex items-center"
-          class="mt-20rpx"
+          custom-shape-class="mt-4rpx"
+          custom-class="mt-20rpx !flex items-start"
           :class="{ 'animation-shake': isShake }"
         >
-          <wd-text text="已阅读并同意"></wd-text>
-          <wd-button type="text">《服务条款》</wd-button>
-          <wd-text text="和"></wd-text>
-          <wd-button type="text">《隐私协议》</wd-button>
+          <wd-text :text="t('pages.login.agree')" />
+          <wd-text :text="t('pages.login.termsOfService')" type="primary" />
+          <wd-text :text="t('common.and')" />
+          <wd-text :text="t('pages.login.privacyPolicy')" type="primary" />
         </wd-checkbox>
 
-        <wd-gap height="20px" />
-        <view class="font-size-14px color-#999">调试信息:</view>
-        <view class="font-size-12px color-#999">系统环境: {{ system }}</view>
-        <view class="font-size-12px color-#999">
+        <wd-gap height="40rpx" />
+        <view class="font-size-28rpx color-#999">调试信息:</view>
+        <view class="font-size-24rpx color-#999">系统环境: {{ system }}</view>
+        <view class="font-size-24rpx color-#999">系统主题: {{ theme }}</view>
+        <view class="font-size-24rpx color-#999">系统版本: {{ version }}</view>
+        <view class="font-size-24rpx color-#999">
           屏幕宽高: {{ screenWidth }}px × {{ screenHeight }}px
         </view>
       </main>
@@ -83,6 +87,7 @@
 </template>
 
 <script lang="ts" setup>
+import { t } from '@/locale/index'
 import type { LoginData, LoginParams } from '@/service/app/user'
 import { useAuthStore } from '@/store/auth'
 import { useMenuStore } from '@/store/menu'
@@ -95,7 +100,7 @@ defineOptions({
 })
 
 // 获取屏幕宽度 > 960
-const { system, screenWidth, screenHeight } = uni.getSystemInfoSync()
+const { system, screenWidth, screenHeight, theme, version } = uni.getSystemInfoSync()
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
@@ -163,24 +168,15 @@ async function handleSubmit() {
 </script>
 
 <style lang="scss">
-.login-form {
-  background-color: #fff;
-  border-radius: 40px;
+.wot-theme-dark .login {
+  color: #f5f5f5;
+  background-color: #111111;
 }
 
-.input-wrapper {
-  padding: 12px;
-  font-size: 48px;
-
-  .label {
-    margin-bottom: 30px;
-    font-size: 64px;
-  }
-
-  .input {
-    padding: 24px 0;
-    border-bottom: 1px solid #eee;
-  }
+.header-extra {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .animation-shake {

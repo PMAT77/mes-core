@@ -18,6 +18,10 @@ function checkUserAuth() {
 onLaunch(() => {
   console.log('App Launch')
   checkUserAuth()
+
+  // uni.setLocale('zh-Hans')
+  // uni.setLocale('en')
+  console.log(uni.getLocale())
 })
 onShow(() => {
   console.log('App Show')

@@ -15,6 +15,8 @@ import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+
 import ViteRestart from 'vite-plugin-restart'
 import { copyNativeRes } from './vite-plugins/copyNativeRes'
 
@@ -83,7 +85,11 @@ export default ({ command, mode }) => {
         eslintrc: { enabled: true },
         vueTemplate: true, // default false
       }),
-
+      Components({
+        dirs: ['src/components'],
+        extensions: ['vue'],
+        deep: true,
+      }),
       ViteRestart({
         // 通过这个插件，在修改vite.config.js文件则不需要重新运行也生效配置
         restart: ['vite.config.js'],

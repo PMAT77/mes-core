@@ -1,8 +1,22 @@
 {
   "tabbar.home": "首页",
   "tabbar.about": "关于",
-  "app.name": "中文标题",
-  "weight": "{heavy}公斤",
-  "detail": "{0}cm, {1}公斤",
-  "introduction": "我是 {name},身高:{detail.height},体重:{detail.weight}"
+
+  "app.fullname": "LY MESCore",
+  "app.name": "LY",
+  "app.desc": "An efficient and elegant enterprise MES mobile terminal...",
+
+  "common": {
+    "and": "and",
+    "login": "Sign In"
+  },
+
+  "pages": {
+    "login": {
+      "welcome": "Welcome",
+      "agree": "Read and agree",
+      "termsOfService": "《Terms Of Service》",
+      "privacyPolicy": "《Privacy Policy》"
+    }
+  }
 }
