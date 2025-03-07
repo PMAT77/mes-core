@@ -12,6 +12,7 @@ import UniPlatform from '@uni-helper/vite-plugin-uni-platform'
 // @see https://github.com/uni-helper/vite-plugin-uni-manifest
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 // @see https://unocss.dev/
+
 import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -116,6 +117,11 @@ export default ({ command, mode }) => {
     define: {
       __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),
       __VITE_APP_PROXY__: JSON.stringify(VITE_APP_PROXY),
+
+      // 配置 vue-i18n 的特性标志
+      __VUE_I18N_FULL_INSTALL__: JSON.stringify(true),
+      __VUE_I18N_LEGACY_API__: JSON.stringify(false),
+      __VUE_I18N_PROD_DEVTOOLS__: JSON.stringify(false),
     },
     css: {
       postcss: {
@@ -138,6 +144,7 @@ export default ({ command, mode }) => {
       host: '0.0.0.0',
       hmr: true,
       port: Number.parseInt(VITE_APP_PORT, 10),
+      open: true,
       // 仅 H5 端生效，其他端不生效（其他端走build，不走devServer)
       proxy: JSON.parse(VITE_APP_PROXY)
         ? {

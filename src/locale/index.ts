@@ -20,8 +20,8 @@ const i18n = createI18n({
   allowComposition: true,
 })
 
-console.log(uni.getLocale())
-console.log(i18n.global.locale)
+// console.log(uni.getLocale())
+// console.log(i18n.global.locale)
 
 /**
  * 可以拿到原始的语言模板，非 vue 文件使用这个方法，
@@ -34,7 +34,7 @@ export const getTemplateByKey = (key: string) => {
     return ''
   }
   const locale = uni.getLocale()
-  console.log('locale:', locale)
+  // console.log('locale:', locale)
 
   const message = messages[locale] // 拿到某个多语言的所有模板（是一个对象)
   if (Object.keys(message).includes(key)) {

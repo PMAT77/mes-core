@@ -9,7 +9,7 @@
 </route>
 
 <template>
-  <PageContainer class="home" bg-color="#111111" min-height="100vh" :statusBar="false">
+  <PageContainer class="home" min-height="100vh" :statusBar="false" :tabbar="true">
     <view class="text-center mt-8">
       当前平台是：
       <text class="text-green-500">{{ PLATFORM.platform }}</text>

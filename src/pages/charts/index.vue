@@ -8,7 +8,7 @@
 </route>
 
 <template>
-  <PageContainer bg-color="#111111" min-height="100vh" :statusBar="false">看板</PageContainer>
+  <PageContainer min-height="100vh" :statusBar="false" :tabbar="true">看板</PageContainer>
 </template>
 
 <script lang="ts" setup></script>

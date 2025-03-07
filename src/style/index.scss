@@ -14,13 +14,35 @@ page {
   --wot-color-theme: #1a2d7d;
 
   // 修改按钮背景色
-  // --wot-button-primary-bg-color: green;
+  --wot-button-error-bg-color: #e85e58;
+  --text-color-1: #000000;
+  --text-color-2: rgba(0, 0, 0, 0.85);
+  --text-color-3: rgba(0, 0, 0, 0.65);
 }
 
 .wot-theme-dark {
   --wot-color-theme: #4e80ee;
+  --text-color-1: #ffffff;
+  --text-color-2: rgba(255, 255, 255, 0.85);
+  --text-color-3: rgba(255, 255, 255, 0.65);
+}
+
+.wd-text.is-default {
+  color: var(--text-color-2) !important;
 }
 
 .text-primary {
   color: var(--wot-color-theme);
+}
+
+.text-color-1 {
+  color: var(--text-color-1);
+}
+
+.text-color-2 {
+  color: var(--text-color-2);
+}
+
+.text-color-3 {
+  color: var(--text-color-3);
 }

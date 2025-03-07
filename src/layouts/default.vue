@@ -12,11 +12,19 @@ import type { ConfigProviderThemeVars } from 'wot-design-uni'
 
 const appStore = useAppStore()
 
-// 初始化主题
-appStore.initTheme()
-// 监听主题变化
-appStore.onThemeChange()
-appStore.setTheme('dark')
-
 const themeVars: ConfigProviderThemeVars = {}
+
+onShow(() => {
+  appStore.setTheme(appStore.theme)
+})
+
+watch(
+  () => appStore.theme,
+  (val) => {
+    appStore.setTheme(val)
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
