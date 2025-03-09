@@ -2,7 +2,7 @@
 {
   style: {
     navigationStyle: 'custom',
-    navigationBarTitleText: '我的',
+    navigationBarTitleText: '个人中心',
   },
 }
 </route>
@@ -10,7 +10,7 @@
 <template>
   <PageContainer min-height="100vh" :statusBar="false" :tabbar="true">
     <view class="mt-12rpx">
-      <view class="text-color-1 font-size-42rpx font-600">个人中心</view>
+      <view class="text-color-1 font-size-42rpx font-600">{{ t('pages.mine.title') }}</view>
 
       <view class="flex items-center mt-60rpx mb-30rpx">
         <wd-img
@@ -22,7 +22,7 @@
         />
         <view class="flex flex-col gap-10rpx ml-24rpx">
           <view class="text-color-2 font-size-36rpx">泡面艺术家</view>
-          <view class="text-color-3 font-size-26rpx">工号：9527</view>
+          <view class="text-color-3 font-size-26rpx">{{ t('pages.mine.workNo') }}：9527</view>
         </view>
       </view>
 
@@ -37,34 +37,39 @@
               :fontSize="18"
               :end-val="item.value"
             />
-            <view class="text-color-3 font-size-20rpx">{{ item.label }}</view>
+            <view class="text-color-3 font-size-20rpx text-center">{{ item.label }}</view>
           </view>
         </view>
       </view>
     </view>
 
     <view class="mt-30rpx">
-      <wd-card custom-class="!m-0 !mb-30rpx !pb-24rpx" custom-footer-class="!p-0" title="更多功能">
+      <wd-card
+        custom-class="!m-0 !mb-30rpx !pb-24rpx"
+        custom-footer-class="!p-0"
+        :title="t('pages.mine.more')"
+      >
         <wd-cell
-          title="通用设置"
           custom-class="!pl-20rpx"
           custom-title-class="!pl-10rpx"
           icon="setting"
           is-link
           to="/pages/mine/settings/index"
+          :title="t('pages.mine.settings')"
         />
       </wd-card>
     </view>
 
     <view class="flex justify-center items-center mt-60rpx">
       <wd-button class="w-90% !rounded-16rpx" type="error" @click="handleLogout">
-        退出登录
+        {{ t('pages.mine.logout') }}
       </wd-button>
     </view>
   </PageContainer>
 </template>
 
 <script lang="ts" setup>
+import { t } from '@/locale'
 import { useAuthStore } from '@/store/auth'
 import { useMessage } from 'wot-design-uni'
 
@@ -73,17 +78,17 @@ const message = useMessage()
 
 const countToRefs = ref()
 
-const data = ref([
-  { label: '日报工数', value: 50 },
-  { label: '周报工数', value: 200 },
-  { label: '月报工数', value: 1392 },
-  { label: '年报工数', value: 7798 },
+const data = computed(() => [
+  { label: t('pages.mine.report.day'), value: 50 },
+  { label: t('pages.mine.report.week'), value: 200 },
+  { label: t('pages.mine.report.month'), value: 1392 },
+  { label: t('pages.mine.report.year'), value: 7798 },
 ])
 
 function handleLogout() {
   message
     .confirm({
-      msg: '确定要退出登录嘛？',
+      msg: t('pages.mine.sureLogout'),
     })
     .then(() => {
       authStore.logout()
@@ -96,7 +101,6 @@ function handleLogout() {
 }
 
 onShow(() => {
-  console.log(countToRefs.value)
   nextTick(() => {
     countToRefs.value.forEach((item) => {
       item.reset()

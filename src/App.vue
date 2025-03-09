@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { useAppStore } from '@/store'
 import { useAuthStore } from '@/store/auth'
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 
+const appStore = useAppStore()
 const authStore = useAuthStore()
 
 function checkUserAuth() {
@@ -19,9 +21,8 @@ onLaunch(() => {
   console.log('App Launch')
   checkUserAuth()
 
-  // uni.setLocale('zh-Hans')
-  // uni.setLocale('en')
-  console.log(uni.getLocale())
+  appStore.setLocale(appStore.locale)
+  console.log('当前语言环境', uni.getLocale())
 })
 onShow(() => {
   console.log('App Show')

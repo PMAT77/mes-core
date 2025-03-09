@@ -29,20 +29,17 @@ export default defineUniPages({
       {
         iconPath: 'static/tabbar/home.svg',
         selectedIconPath: 'static/tabbar/homeHL.svg',
-        pagePath: 'pages/index/index',
-        text: '首页',
+        pagePath: 'pages/home/index',
       },
       {
         iconPath: 'static/tabbar/charts.svg',
         selectedIconPath: 'static/tabbar/chartsHL.svg',
         pagePath: 'pages/charts/index',
-        text: '看板',
       },
       {
         iconPath: 'static/tabbar/mine.svg',
         selectedIconPath: 'static/tabbar/mineHL.svg',
         pagePath: 'pages/mine/index',
-        text: '我的',
       },
     ],
   },

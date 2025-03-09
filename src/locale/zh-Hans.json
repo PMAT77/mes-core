@@ -1,6 +1,6 @@
 {
   "tabbar.home": "首页",
-  "tabbar.mine": "关于",
+  "tabbar.mine": "我的",
 
   "app.fullname": "立昱MESCore",
   "app.name": "立昱",
@@ -17,6 +17,35 @@
       "agree": "已阅读并同意",
       "termsOfService": "《服务条款》",
       "privacyPolicy": "《隐私协议》"
+    },
+    "home": {
+      "title": "首页"
+    },
+    "charts": {
+      "title": "看板"
+    },
+    "mine": {
+      "title": "个人中心",
+      "workNo": "工号",
+      "report": {
+        "day": "日报工数",
+        "week": "周报工数",
+        "month": "月报工数",
+        "year": "年报工数"
+      },
+      "more": "更多功能",
+      "settings": "通用设置",
+      "logout": "退出登录",
+      "sureLogout": "确定退出登录？"
+    },
+    "settings": {
+      "title": "通用设置",
+      "automatic": "跟随系统",
+      "automaticLabel": "开启后将自动切换主题",
+      "manualSelection": "手动选择",
+      "normalMode": "普通模式",
+      "darkMode": "深色模式",
+      "language": "多语言"
     }
   }
 }

@@ -1,13 +1,7 @@
 import { createI18n } from 'vue-i18n'
-// 引入英文语言包
 
-import { Locale } from 'wot-design-uni'
 import en from './en.json'
 import zhHans from './zh-Hans.json' // 简体中文
-// 引入英文语言包
-import enUS from 'wot-design-uni/locale/lang/en-US'
-
-Locale.use('en-US', enUS)
 
 const messages = {
   en,
@@ -34,7 +28,6 @@ export const getTemplateByKey = (key: string) => {
     return ''
   }
   const locale = uni.getLocale()
-  // console.log('locale:', locale)
 
   const message = messages[locale] // 拿到某个多语言的所有模板（是一个对象)
   if (Object.keys(message).includes(key)) {

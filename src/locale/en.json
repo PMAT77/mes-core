@@ -17,6 +17,35 @@
       "agree": "Read and agree",
       "termsOfService": "《Terms Of Service》",
       "privacyPolicy": "《Privacy Policy》"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "charts": {
+      "title": "Charts"
+    },
+    "mine": {
+      "title": "Personal",
+      "workNo": "Work No",
+      "report": {
+        "day": "Daily Report",
+        "week": "Weekly Report",
+        "month": "Monthly Report",
+        "year": "Year Report"
+      },
+      "more": "More Features",
+      "settings": "Settings",
+      "logout": "Logout",
+      "sureLogout": "Are you sure you want to log out?"
+    },
+    "settings": {
+      "title": "Settings",
+      "automatic": "Automatic",
+      "automaticLabel": "Automatically switch themes",
+      "manualSelection": "Select manually",
+      "normalMode": "Normal Mode",
+      "darkMode": "Dark Mode",
+      "language": "Language"
     }
   }
 }

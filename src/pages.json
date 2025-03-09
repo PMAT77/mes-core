@@ -26,26 +26,23 @@
       {
         "iconPath": "static/tabbar/home.svg",
         "selectedIconPath": "static/tabbar/homeHL.svg",
-        "pagePath": "pages/index/index",
-        "text": "首页"
+        "pagePath": "pages/home/index"
       },
       {
         "iconPath": "static/tabbar/charts.svg",
         "selectedIconPath": "static/tabbar/chartsHL.svg",
-        "pagePath": "pages/charts/index",
-        "text": "看板"
+        "pagePath": "pages/charts/index"
       },
       {
         "iconPath": "static/tabbar/mine.svg",
         "selectedIconPath": "static/tabbar/mineHL.svg",
-        "pagePath": "pages/mine/index",
-        "text": "我的"
+        "pagePath": "pages/mine/index"
       }
     ]
   },
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/home/index",
       "type": "home",
       "style": {
         "navigationStyle": "custom",
@@ -73,7 +70,7 @@
       "type": "page",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "我的"
+        "navigationBarTitleText": "个人中心"
       }
     },
     {
@@ -81,7 +78,7 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "设置"
+        "navigationBarTitleText": "通用设置"
       }
     }
   ],

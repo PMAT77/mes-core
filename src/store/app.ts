@@ -1,4 +1,5 @@
 import useRoute from '@/hooks/useRoute'
+import { t } from '@/locale'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { ConfigProviderTheme } from 'wot-design-uni/components/wd-config-provider/types'
@@ -8,8 +9,6 @@ export const useAppStore = defineStore(
   () => {
     const theme = ref<ConfigProviderTheme>('dark')
     const autoTheme = ref(false)
-
-    const local = ref('zh-Hans')
 
     /* 设置主题 */
     const setTheme = (val: ConfigProviderTheme) => {
@@ -54,13 +53,48 @@ export const useAppStore = defineStore(
       }
     }
 
+    const locale = ref(uni.getLocale() || 'zh-Hans')
+
+    const setLocale = (val: string) => {
+      locale.value = val
+      uni.setLocale(val)
+
+      const { currentPageRoute, isTabBarPage, getTabBarList } = useRoute()
+
+      if (currentPageRoute) {
+        const pathArr = currentPageRoute.split('/')
+        const name = pathArr[pathArr.length - 2]
+        uni.setNavigationBarTitle({
+          title: t(`pages.${name}.title`),
+        })
+      }
+    }
+    const getLocale = () => {
+      return uni.getLocale()
+    }
+
+    watch(
+      () => locale.value,
+      (val) => {
+        if (val) {
+          setLocale(val)
+          console.log('当前系统语言', val)
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
+
     return {
       theme,
       autoTheme,
       setTheme,
       onThemeChange,
 
-      local,
+      locale,
+      setLocale,
+      getLocale,
     }
   },
   {

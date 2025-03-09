@@ -162,7 +162,7 @@ async function handleSubmit() {
   if (screenWidth > 960) {
     uni.navigateTo({ url: '/pages/dashboard/product/index' })
   } else {
-    uni.switchTab({ url: '/pages/index/index' })
+    uni.switchTab({ url: '/pages/home/index' })
   }
 }
 </script>

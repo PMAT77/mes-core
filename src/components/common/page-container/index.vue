@@ -15,8 +15,6 @@
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets, statusBarHeight } = uni.getSystemInfoSync()
 
-console.log(statusBarHeight)
-
 type Props = {
   // 是否预留顶部状态栏高度
   statusBar?: boolean
