@@ -9,10 +9,12 @@
 
 <template>
   <PageContainer min-height="100vh" :statusBar="false" :tabbar="true">
-    <view class="mt-12rpx">
-      <view class="text-color-1 font-size-42rpx font-600">{{ t('pages.mine.title') }}</view>
+    <view class="flex flex-col">
+      <view class="mb-30rpx text-color-1 font-size-42rpx font-600">
+        {{ t('pages.mine.title') }}
+      </view>
 
-      <view class="flex items-center mt-60rpx mb-30rpx">
+      <view class="flex items-center mt-30rpx mb-30rpx">
         <wd-img
           :width="70"
           :height="70"
@@ -89,6 +91,8 @@ function handleLogout() {
   message
     .confirm({
       msg: t('pages.mine.sureLogout'),
+      confirmButtonText: t('common.confirm'),
+      cancelButtonText: t('common.cancel'),
     })
     .then(() => {
       authStore.logout()

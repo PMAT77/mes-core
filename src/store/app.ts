@@ -7,16 +7,24 @@ import { ConfigProviderTheme } from 'wot-design-uni/components/wd-config-provide
 export const useAppStore = defineStore(
   'APP',
   () => {
+    // 当前主题
     const theme = ref<ConfigProviderTheme>('dark')
+    // 主题跟随系统
     const autoTheme = ref(false)
+    // 当前语言
+    const locale = ref(uni.getLocale() || 'zh-Hans')
 
-    /* 设置主题 */
+    /* 获取当前系统主题 */
+    const getTheme = () => {
+      return theme.value
+    }
+    /* 设置系统主题 */
     const setTheme = (val: ConfigProviderTheme) => {
       theme.value = val
 
       const { currentPageStyle, isTabBarPage } = useRoute()
 
-      // 页面是否有 NavigationBar
+      // 切换导航栏主题
       if (currentPageStyle.navigationStyle !== 'custom') {
         uni.setNavigationBarColor({
           frontColor: theme.value === 'light' ? '#000000' : '#f2f7fd',
@@ -24,15 +32,14 @@ export const useAppStore = defineStore(
         })
       }
 
-      // 页面是否有 TabBar
+      // 切换TabBar主题
       if (isTabBarPage()) {
         uni.setTabBarStyle({
           backgroundColor: theme.value === 'light' ? '#f2f7fd' : '#212121',
         })
       }
     }
-
-    /* 监听主题改变 */
+    /* 监听系统主题改变 */
     const onThemeChange = () => {
       if (uni.onThemeChange) {
         uni.onThemeChange((res) => {
@@ -53,24 +60,33 @@ export const useAppStore = defineStore(
       }
     }
 
-    const locale = ref(uni.getLocale() || 'zh-Hans')
-
+    /* 获取当前语言环境 */
+    const getLocale = () => {
+      return uni.getLocale()
+    }
+    /* 切换语言环境 */
     const setLocale = (val: string) => {
-      locale.value = val
       uni.setLocale(val)
+      console.log('当前语言环境', getLocale())
 
-      const { currentPageRoute, isTabBarPage, getTabBarList } = useRoute()
-
+      // 切换导航栏标题语言
+      const { currentPageRoute } = useRoute()
       if (currentPageRoute) {
         const pathArr = currentPageRoute.split('/')
         const name = pathArr[pathArr.length - 2]
         uni.setNavigationBarTitle({
           title: t(`pages.${name}.title`),
         })
+        console.log('当前导航栏标题', t(`pages.${name}.title`))
       }
     }
-    const getLocale = () => {
-      return uni.getLocale()
+    /* 初始化语言环境 */
+    const initLocale = () => {
+      uni.addInterceptor('navigateTo', {
+        success: () => {
+          setLocale(locale.value)
+        },
+      })
     }
 
     watch(
@@ -78,23 +94,22 @@ export const useAppStore = defineStore(
       (val) => {
         if (val) {
           setLocale(val)
-          console.log('当前系统语言', val)
         }
       },
-      {
-        immediate: true,
-      },
+      { immediate: true },
     )
 
     return {
       theme,
       autoTheme,
+      getTheme,
       setTheme,
       onThemeChange,
 
       locale,
-      setLocale,
       getLocale,
+      setLocale,
+      initLocale,
     }
   },
   {

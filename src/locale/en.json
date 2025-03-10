@@ -8,7 +8,9 @@
 
   "common": {
     "and": "and",
-    "login": "Sign In"
+    "login": "Sign In",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
 
   "pages": {

@@ -1,6 +1,6 @@
 <template>
   <view
-    class="page-container overflow-hidden pt-2"
+    class="page-container overflow-hidden pt-4"
     :class="[`bg-${bgColor}`, { 'px-4': padding }]"
     :style="[
       `marginTop: ${safeAreaInsets?.top} + 'px'`,

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store'
 import { useAuthStore } from '@/store/auth'
-import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { onLaunch } from '@dcloudio/uni-app'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 
 const appStore = useAppStore()
 const authStore = useAuthStore()
 
+/** 检查登录状态 */
 function checkUserAuth() {
   if (!authStore.isLoggedIn) {
     // 如果登录标识为空，跳转到登录页面
@@ -18,17 +19,10 @@ function checkUserAuth() {
 }
 
 onLaunch(() => {
-  console.log('App Launch')
-  checkUserAuth()
+  console.log('App Launch...')
 
-  appStore.setLocale(appStore.locale)
-  console.log('当前语言环境', uni.getLocale())
-})
-onShow(() => {
-  console.log('App Show')
-})
-onHide(() => {
-  console.log('App Hide')
+  checkUserAuth()
+  appStore.initLocale()
 })
 </script>
 

@@ -8,7 +8,9 @@
 
   "common": {
     "and": "和",
-    "login": "登录"
+    "login": "登录",
+    "confirm": "确认",
+    "cancel": "取消"
   },
 
   "pages": {
@@ -22,7 +24,7 @@
       "title": "首页"
     },
     "charts": {
-      "title": "看板"
+      "title": "图表"
     },
     "mine": {
       "title": "个人中心",
