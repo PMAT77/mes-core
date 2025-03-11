@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     MbCharts: typeof import('./src/components/custom/mb-charts/index.vue')['default']
     PageContainer: typeof import('./src/components/common/page-container/index.vue')['default']
+    RingCharts: typeof import('./src/components/custom/ring-charts/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

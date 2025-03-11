@@ -10,7 +10,7 @@
 <template>
   <PageContainer min-height="100vh" :statusBar="false" :tabbar="true">
     <view class="flex flex-col">
-      <view class="mb-30rpx text-color-1 font-size-42rpx font-600">
+      <view class="mt-4 mb-30rpx text-color-1 font-size-42rpx font-600">
         {{ t('pages.mine.title') }}
       </view>
 

@@ -1,12 +1,14 @@
 <template>
   <view
-    class="page-container overflow-hidden pt-4"
-    :class="[`bg-${bgColor}`, { 'px-4': padding }]"
+    class="page-container overflow-hidden"
+    :class="[{ 'px-4': padding }]"
     :style="[
-      `marginTop: ${safeAreaInsets?.top} + 'px'`,
-      `minHeight: calc(${minHeight} - ${tabbar ? statusBarHeight + 50 : 0}px - ${statusBar ? statusBarHeight + 44 : 0}px)`,
+      `margin-top: ${safeAreaInsets?.top} + 'px'`,
+      `min-height: calc(${minHeight} - ${tabbar ? statusBarHeight + 50 : 0}px - ${statusBar ? statusBarHeight + 44 : 0}px)`,
+      `background-color: ${bgColor ? bgColor : ''}`,
     ]"
   >
+    <slot name="header"></slot>
     <slot></slot>
   </view>
 </template>
@@ -27,6 +29,7 @@ type Props = {
   // 是否开启默认内边距
   padding?: boolean
 }
+
 withDefaults(defineProps<Props>(), {
   statusBar: true,
   tabbar: false,
