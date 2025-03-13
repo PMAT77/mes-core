@@ -15,4 +15,5 @@ export default store
 
 // 模块统一导出
 export * from './app'
+export * from './auth'
 export * from './user'

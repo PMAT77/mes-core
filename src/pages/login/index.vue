@@ -88,9 +88,8 @@
 
 <script lang="ts" setup>
 import { t } from '@/locale/index'
-import type { LoginData, LoginParams } from '@/service/app/user'
+import type { UserInfoData } from '@/service/app'
 import { useAuthStore } from '@/store/auth'
-import { useMenuStore } from '@/store/menu'
 import { useUserStore } from '@/store/user'
 import { httpPost } from '@/utils/http'
 import { useToast } from 'wot-design-uni'
@@ -99,12 +98,25 @@ defineOptions({
   name: 'Login',
 })
 
+/* 登录请求参数类 */
+export type LoginParams = {
+  username: string
+  password: string
+  agreed: boolean
+}
+
+/* 登录信息 */
+export type LoginData = {
+  token: string
+  sysAllDictItems: { [key: string]: [] }
+  userInfo: UserInfoData
+}
+
 // 获取屏幕宽度 > 960
 const { system, screenWidth, screenHeight, theme, version } = uni.getSystemInfoSync()
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
-const menuStore = useMenuStore()
 const toast = useToast()
 
 const model = ref<LoginParams>({
@@ -116,7 +128,7 @@ const model = ref<LoginParams>({
 const isShake = ref(false) // 是否强调动画
 
 /** 检查是否同意服务条款 */
-function isCheckArgeed() {
+function checkIsArgeed() {
   if (!model.value.agreed) {
     isShake.value = true
     const t = setTimeout(() => {
@@ -132,39 +144,43 @@ const {
   loading,
   data,
   run: fetchLogin,
-} = useRequest<LoginData>(() => httpPost('/system/login', model.value))
+} = useRequest<LoginData>(() => httpPost('/dev/sys/mLogin', model.value))
 
+/** 用户登录 */
 async function handleSubmit() {
   console.log('登录表单值', model.value)
-  if (!isCheckArgeed()) return
+  if (!checkIsArgeed()) return
 
-  await fetchLogin()
-  console.log('登录结果', data.value)
-  if (!data.value) {
-    console.log('登录失败')
-    toast.show('登录失败, 请联系管理员处理')
+  try {
+    await fetchLogin()
+    console.log('登录结果', data.value)
+
+    if (!data.value) {
+      console.log('登录失败')
+      toast.show('登录失败, 请联系管理员处理')
+      return
+    }
+
+    authStore.setToken(data.value.token)
+    authStore.setDicts(data.value.sysAllDictItems)
+    userStore.setUserInfo(data.value.userInfo)
+    // 登录成功，跳转首页
+    uni.switchTab({ url: '/pages/home/index' })
+  } catch (err) {
+    console.log(err)
   }
-  authStore.setToken(data.value.token)
-  // authStore.setDicts(data.value.sysAllDictItems)
-  // userStore.setUserInfo(data.value.userInfo)
 
-  // const { success, result } = await fetchPermission()
-  // console.log('权限信息', result)
-  // if (!success) {
-  //   toast.show('获取权限信息失败, 请联系管理员处理')
-  //   return
-  // }
   // authStore.setPermissions(result.codeList)
-  // const mobileMenu = result.menu.find((item: any) => item.name === 'mobile')?.children || []
-  // menuStore.setMenus(mobileMenu)
 
   // 判断设备大小, 是否跳转看板页面
-  if (screenWidth > 960) {
-    uni.navigateTo({ url: '/pages/dashboard/product/index' })
-  } else {
-    uni.switchTab({ url: '/pages/home/index' })
-  }
+  // if (screenWidth > 960) {
+  //   uni.navigateTo({ url: '/pages/dashboard/product/index' })
+  // } else {
+  //   uni.switchTab({ url: '/pages/home/index' })
+  // }
 }
+
+function initPage() {}
 </script>
 
 <style lang="scss">

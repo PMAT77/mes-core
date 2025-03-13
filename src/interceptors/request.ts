@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import qs from 'qs'
-import { useUserStore } from '@/store'
-import { platform } from '@/utils/platform'
+import { useAuthStore } from '@/store'
 import { getEnvBaseUrl } from '@/utils'
+import { platform } from '@/utils/platform'
+import qs from 'qs'
 
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
@@ -12,6 +12,12 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
+
+// 可以写一个映射对象，如：
+const proxyMap = {
+  dev: 'http://124.71.138.120:8097/small-mes',
+  pro: 'http://124.71.138.120:8097/small-mes',
+}
 
 // 拦截器配置
 const httpInterceptor = {
@@ -26,22 +32,28 @@ const httpInterceptor = {
         options.url += `?${queryStr}`
       }
     }
+
     // 非 http 开头需拼接地址
-    if (!options.url.startsWith('http')) {
-      // #ifdef H5
-      // console.log(__VITE_APP_PROXY__)
-      if (JSON.parse(__VITE_APP_PROXY__)) {
-        // 啥都不需要做
-      } else {
-        options.url = baseUrl + options.url
+    Object.keys(proxyMap).forEach((key) => {
+      if (options.url.startsWith(`/${key}`)) {
+        options.url = proxyMap[key] + options.url.slice(key.length + 1)
       }
-      // #endif
-      // 非H5正常拼接
-      // #ifndef H5
-      options.url = baseUrl + options.url
-      // #endif
-      // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
-    }
+    })
+    // if (!options.url.startsWith('http')) {
+    //   // #ifdef H5
+    //   // console.log(__VITE_APP_PROXY__)
+    //   if (JSON.parse(__VITE_APP_PROXY__)) {
+    //     // 啥都不需要做
+    //   } else {
+    //     options.url = baseUrl + options.url
+    //   }
+    //   // #endif
+    //   // 非H5正常拼接
+    //   // #ifndef H5
+    //   options.url = baseUrl + options.url
+    //   // #endif
+    //   // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
+    // }
     // 1. 请求超时
     options.timeout = 10000 // 10s
     // 2. （可选）添加小程序端请求头标识
@@ -50,10 +62,10 @@ const httpInterceptor = {
       ...options.header,
     }
     // 3. 添加 token 请求头标识
-    const userStore = useUserStore()
-    const { token } = userStore.userInfo as unknown as IUserInfo
-    if (token) {
-      options.header.Authorization = `Bearer ${token}`
+    const authStore = useAuthStore()
+    if (authStore.token) {
+      options.header.Authorization = `Bearer ${authStore.token}`
+      options.header['X-Access-Token'] = authStore.token
     }
   },
 }

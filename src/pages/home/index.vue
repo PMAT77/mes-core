@@ -57,11 +57,16 @@
 </template>
 
 <script lang="ts" setup>
+import type { PermissionData } from '@/service/app'
+import { useMenuStore } from '@/store/menu'
+import { httpGet } from '@/utils/http'
 import { Pagination } from '@zebra-ui/swiper/modules'
 
 defineOptions({
   name: 'Home',
 })
+
+const menuStore = useMenuStore()
 
 const modules = ref([Pagination])
 
@@ -81,6 +86,20 @@ const panelList = ref([
 ])
 
 const date = ref(Date.now())
+
+const {
+  loading,
+  data,
+  run: getUserPermission,
+} = useRequest<PermissionData>(() => httpGet('/dev/sys/permission/getUserPermissionByToken'))
+
+onShow(async () => {
+  await getUserPermission()
+  console.log(data.value)
+  const mobileMenu = data.value.menu?.find((item: any) => item.name === 'mobile')?.children || []
+  menuStore.setMenus(mobileMenu)
+  console.log(menuStore.menus)
+})
 </script>
 
 <style lang="scss">
