@@ -5,9 +5,13 @@
 
 interface NavigateToOptions {
   url: "/pages/home/index" |
+       "/pages/abnormal-call/index" |
        "/pages/charts/index" |
+       "/pages/device/index" |
        "/pages/login/index" |
        "/pages/mine/index" |
+       "/pages/production-report/index" |
+       "/pages/device/details/index" |
        "/pages/mine/settings/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}

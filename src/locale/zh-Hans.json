@@ -10,7 +10,8 @@
     "and": "和",
     "login": "登录",
     "confirm": "确认",
-    "cancel": "取消"
+    "cancel": "取消",
+    "inputOrScan": "请输入或者扫描..."
   },
 
   "pages": {
@@ -48,6 +49,19 @@
       "normalMode": "普通模式",
       "darkMode": "深色模式",
       "language": "多语言"
+    },
+    "production-report": {
+      "title": "生产报工"
+    },
+    "device": {
+      "title": "设备管理",
+
+      "details": {
+        "title": "设备详情"
+      }
+    },
+    "abnormal-call": {
+      "title": "异常呼叫"
     }
   }
 }

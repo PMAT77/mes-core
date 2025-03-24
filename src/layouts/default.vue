@@ -7,24 +7,31 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/index'
-import type { ConfigProviderThemeVars } from 'wot-design-uni'
+import { useAppStore } from "@/store/index";
+import type { ConfigProviderThemeVars } from "wot-design-uni";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
 
-const themeVars: ConfigProviderThemeVars = {}
+const themeVars: ConfigProviderThemeVars = {};
 
 onShow(() => {
-  appStore.setTheme(appStore.theme)
-})
+  appStore.initLocale();
+  appStore.setTheme(appStore.theme);
+});
 
 watch(
   () => appStore.theme,
   (val) => {
-    appStore.setTheme(val)
+    appStore.setTheme(val);
   },
-  {
-    immediate: true,
+  { immediate: true },
+);
+
+watch(
+  () => appStore.locale,
+  (val) => {
+    appStore.setLocale(val);
   },
-)
+  { immediate: true },
+);
 </script>

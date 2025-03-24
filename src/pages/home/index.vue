@@ -1,31 +1,73 @@
-<!-- 使用 type="home" 属性设置首页，其他页面不需要设置，默认为page；推荐使用json5，更强大，且允许注释 -->
+<!-- 使用 type="home" 属性设置首页，其他页面不需要设置，默认为page -->
 <route lang="json5" type="home">
 {
   style: {
-    navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
+    navigationStyle: "custom",
+    navigationBarTitleText: "首页",
   },
 }
 </route>
 
 <template>
-  <PageContainer class="home" min-height="100vh" :statusBar="false" :tabbar="true">
+  <PageContainer
+    class="home flex flex-col"
+    min-height="100vh"
+    :padding="false"
+    :statusBar="false"
+    :tabbar="true"
+  >
     <template #header>
       <view
-        class="min-h-300rpx !mx--4"
-        style="background-image: linear-gradient(140deg, #0c3483 0%, #6b8cce 100%, #a2b6df 10%)"
-      ></view>
+        class="flex items-end min-h-300rpx !mx--4"
+        style="
+          background-image: linear-gradient(
+            140deg,
+            #0c3483 0%,
+            #6b8cce 100%,
+            #a2b6df 10%
+          );
+        "
+      >
+        <view
+          class="flex w-full justify-between items-center box-border px-68rpx pb-30rpx"
+        >
+          <view
+            class="flex flex-col gap-20rpx flex-grow-1 justify-end h-80px color-#fff"
+          >
+            <view class="flex items-center w-full font-size-38rpx">
+              {{ dayjs(new Date()).format("YYYY-MM-DD") }}
+            </view>
+            <view class="font-size-28rpx"
+              >Hello！{{ userStore.userInfo.realname }}，你好！</view
+            >
+          </view>
+
+          <image
+            src="/static/svgs/factory.svg"
+            mode="scaleToFill"
+            class="h-80px w-80px"
+          />
+        </view>
+      </view>
     </template>
 
     <view class="text-center">
-      <wd-card class="!mx--4 !mb-30rpx !pt-48rpx !pb-12rpx !rounded-0">
-        <z-swiper grabCursor :pagination="{ dynamicBullets: true }" :modules="modules">
-          <z-swiper-item v-for="(menus, index) in panelList" :key="index">
-            <view class="w-full pb-48rpx flex items-center">
+      <wd-card class="!m-0 !pt-48rpx !pb-12rpx !rounded-0">
+        <z-swiper
+          grabCursor
+          :pagination="{ dynamicBullets: true }"
+          :modules="modules"
+        >
+          <z-swiper-item v-for="(menus, index) in menusList" :key="index">
+            <view
+              v-if="!loading"
+              class="w-full pb-24rpx flex flex-wrap items-center"
+            >
               <view
                 v-for="menu in menus"
                 :key="menu.id"
-                class="flex flex-col items-center gap-8rpx w-25%"
+                class="flex flex-col items-center mb-24rpx gap-8rpx w-25%"
+                @click="onToPage(menu.path)"
               >
                 <view class="p-16rpx rounded-2 bg-#d2e7fc">
                   <image
@@ -34,72 +76,200 @@
                     :src="`/static/svgs/${menu.meta.icon}.svg`"
                   />
                 </view>
-                <view class="mt-4rpx font-size-22rpx">{{ menu.meta.i18nKey }}</view>
+                <view class="mt-4rpx font-size-22rpx">{{
+                  menu.meta.title
+                }}</view>
               </view>
+            </view>
+
+            <view
+              v-if="loading"
+              class="w-full pb-24rpx flex flex-wrap justify-center items-center"
+            >
+              <wd-skeleton
+                class="w-90% mb-68rpx"
+                animation="flashed"
+                :row-col="skeletonGrid"
+                :loading="loading"
+              />
             </view>
           </z-swiper-item>
         </z-swiper>
       </wd-card>
     </view>
 
-    <view>
-      <wd-card class="!mx--4 !rounded-0">
-        <template #title>
-          <view class="flex justify-between items-center">
-            <view>生产报工</view>
+    <view class="flex-grow-1">
+      <z-paging
+        ref="paging"
+        v-model="dataList"
+        safe-area-inset-bottom
+        back-to-top-bottom="0rpx"
+        :auto-show-back-to-top="true"
+        :height="pagingHeight"
+        :fixed="false"
+        :auto="true"
+        :concat="true"
+        :loading-more-title-custom-style="{
+          'font-size': '26rpx',
+        }"
+        @query="queryList"
+      >
+        <view
+          class="block-title flex justify-between items-center mt-20rpx"
+          @click="onToPage('/production-report/index')"
+        >
+          <wd-text text="报工管理" size="28rpx" class="text-color-3" />
+          <view class="i-carbon:chevron-right" />
+        </view>
 
-            <wd-text text="进入看板" type="primary" size="24rpx" />
+        <wd-card v-for="(item, index) in dataList" :key="index">
+          <template #title>
+            <card-status-title
+              :title="item.workNum"
+              status-text="进行中"
+              status-color="#498b45"
+            />
+          </template>
+
+          <view class="flex flex-col gap-20rpx !pb-30rpx font-size-24rpx">
+            <view class="flex items-center">
+              <mb-text :text="item.materialName" type="primary" />
+              <wd-divider vertical />
+              <mb-text :text="item.materialCode" type="primary" />
+              <wd-divider vertical />
+              <mb-text :text="item.specification" type="primary" />
+            </view>
+            <mb-text prefix="生产工单号：" :text="item.prodOrderNum" />
+            <mb-text prefix="作业日期：" :text="item.workDate" />
+            <mb-text prefix="所在车间：" :text="item.workshopName" />
+            <wd-text
+              prefix="计划数量："
+              :text="`${item.plannedQuantity} ${item.unitName}`"
+            />
+            <mb-text prefix="创建时间：" :text="item.createTime" />
           </view>
-        </template>
-      </wd-card>
+        </wd-card>
+      </z-paging>
     </view>
   </PageContainer>
 </template>
 
 <script lang="ts" setup>
-import type { PermissionData } from '@/service/app'
-import { useMenuStore } from '@/store/menu'
-import { httpGet } from '@/utils/http'
-import { Pagination } from '@zebra-ui/swiper/modules'
+import type { PermissionData } from "@/service/app";
+import { useMenuStore, useUserStore } from "@/store";
+import useZPaging from "@/uni_modules/z-paging/components/z-paging/js/hooks/useZPaging";
+import { Pagination } from "@/uni_modules/zebra-swiper/modules";
+import { httpGet } from "@/utils/http";
+import { onPageScroll, onReachBottom } from "@dcloudio/uni-app";
+import dayjs from "dayjs";
 
 defineOptions({
-  name: 'Home',
-})
+  name: "Home",
+});
 
-const menuStore = useMenuStore()
+const userStore = useUserStore();
+const menuStore = useMenuStore();
 
-const modules = ref([Pagination])
+// ZSwiper 轮播配置
+const modules = ref([Pagination]);
 
-const panelList = ref([
+// ZPaging
+const paging = ref(null);
+
+// #ifdef APP-PLUS
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const pagingHeight = ref("calc(100vh - 309.14px)");
+// #endif
+
+// #ifndef APP-PLUS
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+const pagingHeight = ref("calc(100vh - 359.14px)");
+// #endif
+
+useZPaging(paging);
+
+// 首页菜单列表
+const menusList = ref([]);
+
+// 骨架屏配置
+const skeletonGrid = ref([
   [
-    { id: 0, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 1, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 2, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 3, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
+    { width: "48px", height: "48px" },
+    { width: "48px", height: "48px" },
+    { width: "48px", height: "48px" },
+    { width: "48px", height: "48px" },
   ],
-  [
-    { id: 0, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 1, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 2, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-    { id: 3, meta: { i18nKey: '生产报工', icon: 'menuProductReport' } },
-  ],
-])
+]);
 
-const date = ref(Date.now())
+// 首页列表数据
+const dataList = ref([]);
 
+// 用户菜单、权限请求
 const {
   loading,
   data,
   run: getUserPermission,
-} = useRequest<PermissionData>(() => httpGet('/dev/sys/permission/getUserPermissionByToken'))
+} = useRequest<PermissionData>(() =>
+  httpGet("/dev/sys/permission/getUserPermissionByToken"),
+);
+
+const { data: orderData, run: getProductionOrder } = useRequest<any>(() =>
+  httpGet("/dev/production/mesDispatchList/list"),
+);
+
+/**
+ * @method 工单列表-加载更多
+ */
+const queryList = (pageNo, pageSize) => {
+  getProductionOrder()
+    .then((res) => {
+      console.log(res);
+      paging.value.complete(orderData.value.records);
+    })
+    .catch((err) => {
+      console.log("工单列表加载错误", err);
+      paging.value.complete(false);
+    });
+};
+
+/**
+ * @method 获取菜单列表
+ */
+async function getMenus() {
+  await getUserPermission();
+  console.log("Permission", data.value); // 打印接口数据
+  const mobileMenu =
+    data.value.menu?.find((item: any) => item.name === "mobile")?.children ||
+    [];
+  menuStore.setMenus(mobileMenu);
+  console.log("Menus", menuStore.menus); // 打印菜单数据
+
+  const chunkSize = 4; // 轮播菜单分块大小
+  const chunkedMenus = Array.from(
+    { length: Math.ceil(menuStore.menus.length / chunkSize) },
+    (_, index) =>
+      menuStore.menus.slice(index * chunkSize, (index + 1) * chunkSize),
+  );
+
+  menusList.value = chunkedMenus;
+}
+
+function onToPage(path: string) {
+  console.log("onToPage", path);
+  uni.navigateTo({
+    url: `/pages${path}`,
+  });
+}
 
 onShow(async () => {
-  await getUserPermission()
-  console.log(data.value)
-  const mobileMenu = data.value.menu?.find((item: any) => item.name === 'mobile')?.children || []
-  menuStore.setMenus(mobileMenu)
-  console.log(menuStore.menus)
-})
+  await getMenus();
+});
+
+onPageScroll(() => {});
+onReachBottom(() => {});
 </script>
 
 <style lang="scss">

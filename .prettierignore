@@ -10,3 +10,5 @@ src/manifest.json
 
 # 忽略自动生成文件
 src/service/app/**
+
+src/uni_modules/z-paging/components/z-paging/z-paging.vue

@@ -1,103 +1,114 @@
-import useRoute from '@/hooks/useRoute'
-import { t } from '@/locale'
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { ConfigProviderTheme } from 'wot-design-uni/components/wd-config-provider/types'
+import useRoute from "@/hooks/useRoute";
+import { t } from "@/locale";
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import { ConfigProviderTheme } from "wot-design-uni/components/wd-config-provider/types";
 
 export const useAppStore = defineStore(
-  'APP',
+  "APP",
   () => {
     // 当前主题
-    const theme = ref<ConfigProviderTheme>('dark')
+    const theme = ref<ConfigProviderTheme>("dark");
     // 主题跟随系统
-    const autoTheme = ref(false)
+    const autoTheme = ref(false);
     // 当前语言
-    const locale = ref(uni.getLocale() || 'zh-Hans')
+    const locale = ref(uni.getLocale() || "zh-Hans");
 
     /* 获取当前系统主题 */
     const getTheme = () => {
-      return theme.value
-    }
+      return theme.value;
+    };
     /* 设置系统主题 */
     const setTheme = (val: ConfigProviderTheme) => {
-      theme.value = val
+      theme.value = val;
 
-      const { currentPageStyle, isTabBarPage } = useRoute()
+      const { currentPageStyle, isTabBarPage } = useRoute();
 
       // 切换导航栏主题
-      if (currentPageStyle.navigationStyle !== 'custom') {
+      if (currentPageStyle.navigationStyle !== "custom") {
         uni.setNavigationBarColor({
-          frontColor: theme.value === 'light' ? '#000000' : '#f2f7fd',
-          backgroundColor: theme.value === 'light' ? '#f2f7fd' : '#111111',
-        })
+          frontColor: theme.value === "light" ? "#000000" : "#f2f7fd",
+          backgroundColor: theme.value === "light" ? "#f2f7fd" : "#111111",
+        });
       }
 
       // 切换TabBar主题
       if (isTabBarPage()) {
         uni.setTabBarStyle({
-          backgroundColor: theme.value === 'light' ? '#f2f7fd' : '#212121',
-        })
+          backgroundColor: theme.value === "light" ? "#f2f7fd" : "#212121",
+        });
       }
-    }
+    };
     /* 监听系统主题改变 */
     const onThemeChange = () => {
       if (uni.onThemeChange) {
         uni.onThemeChange((res) => {
-          const theme = res.theme || 'light'
-          setTheme(theme)
-        })
+          const theme = res.theme || "light";
+          setTheme(theme);
+        });
       } else if (window.matchMedia) {
         // H5 平台
-        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-        console.log('isDarkMode', isDarkMode)
-        setTheme(isDarkMode ? 'dark' : 'light') // 默认
-        window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
-          setTheme(e.matches ? 'dark' : 'light') // 默认
-        })
+        const isDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        console.log("isDarkMode", isDarkMode);
+        setTheme(isDarkMode ? "dark" : "light"); // 默认
+        window.matchMedia("(prefers-color-scheme: dark)").addListener((e) => {
+          setTheme(e.matches ? "dark" : "light"); // 默认
+        });
       } else {
-        console.log('当前平台不支持主题监听')
-        setTheme('light') // 默认
+        console.log("当前平台不支持主题监听");
+        setTheme("light"); // 默认
       }
-    }
+    };
 
     /* 获取当前语言环境 */
     const getLocale = () => {
-      return uni.getLocale()
-    }
+      return uni.getLocale();
+    };
     /* 切换语言环境 */
     const setLocale = (val: string) => {
-      uni.setLocale(val)
-      console.log('当前语言环境', getLocale())
+      uni.setLocale(val);
+      console.log("当前语言环境", getLocale());
 
       // 切换导航栏标题语言
-      const { currentPageRoute } = useRoute()
+      const { currentPageRoute } = useRoute();
       if (currentPageRoute) {
-        const pathArr = currentPageRoute.split('/')
-        const name = pathArr[pathArr.length - 2]
+        console.log("currentPageRoute", currentPageRoute);
+        const pathArr = currentPageRoute?.split("/");
+        console.log("pathArr", pathArr);
+        let name = "";
+        if (pathArr.length && pathArr.length >= 4) {
+          pathArr.pop();
+          pathArr.shift();
+          name = pathArr.join(".");
+        } else {
+          name = pathArr[pathArr.length - 2];
+        }
         uni.setNavigationBarTitle({
           title: t(`pages.${name}.title`),
-        })
-        console.log('当前导航栏标题', t(`pages.${name}.title`))
+        });
+        console.log("当前导航栏标题", t(`pages.${name}.title`));
       }
-    }
+    };
     /* 初始化语言环境 */
     const initLocale = () => {
-      uni.addInterceptor('navigateTo', {
+      uni.addInterceptor("navigateTo", {
         success: () => {
-          setLocale(locale.value)
+          setLocale(locale.value);
         },
-      })
-    }
+      });
+    };
 
     watch(
       () => locale.value,
       (val) => {
         if (val) {
-          setLocale(val)
+          setLocale(val);
         }
       },
       { immediate: true },
-    )
+    );
 
     return {
       theme,
@@ -110,9 +121,9 @@ export const useAppStore = defineStore(
       getLocale,
       setLocale,
       initLocale,
-    }
+    };
   },
   {
     persist: true,
   },
-)
+);

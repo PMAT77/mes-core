@@ -1,16 +1,8 @@
-// @import './iconfont.css';
-
 // 引入 zebra-ui: swiper 样式
-@use '@zebra-ui/swiper/index';
-@use '@zebra-ui/swiper/modules/pagination/pagination';
-
-// .test {
-//   // 可以通过 @apply 多个样式封装整体样式
-//   @apply mt-4 ml-4;
-
-//   padding-top: 4px;
-//   color: red;
-// }
+/* stylelint-disable-next-line scss/load-partial-extension */
+@use "@/uni_modules/zebra-swiper/index.scss";
+/* stylelint-disable-next-line scss/load-partial-extension */
+@use "@/uni_modules/zebra-swiper/modules/pagination/pagination.scss";
 
 :root,
 page {
@@ -22,6 +14,7 @@ page {
   --text-color-1: #000000;
   --text-color-2: rgba(0, 0, 0, 0.85);
   --text-color-3: rgba(0, 0, 0, 0.65);
+  --text-color-4: rgba(0, 0, 0, 0.4);
   --swiper-pagination-bullet-inactive-color: #000000 !important;
 }
 
@@ -30,6 +23,7 @@ page {
   --text-color-1: #ffffff;
   --text-color-2: rgba(255, 255, 255, 0.85);
   --text-color-3: rgba(255, 255, 255, 0.65);
+  --text-color-4: rgba(255, 255, 255, 0.4);
   --swiper-pagination-bullet-inactive-color: #ffffff !important;
 }
 
@@ -51,6 +45,10 @@ page {
 
 .text-color-3 {
   color: var(--text-color-3);
+}
+
+.text-color-4 {
+  color: var(--text-color-4);
 }
 /* stylelint-disable selector-type-no-unknown */
 button::after {
@@ -93,4 +91,9 @@ image {
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+.block-title {
+  padding: 10px 15px;
+  font-size: 13px;
 }

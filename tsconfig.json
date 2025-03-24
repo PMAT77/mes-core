@@ -20,14 +20,16 @@
       "@uni-helper/uni-types",
       "@types/wechat-miniprogram",
       "wot-design-uni/global.d.ts",
-      "z-paging/types",
       "./src/typings.d.ts"
     ]
   },
   "vueCompilerOptions": {
     "plugins": ["@uni-helper/uni-types/volar-plugin"]
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    "src/uni_modules/z-paging/components/z-paging/z-paging.vue"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.js",

@@ -10,7 +10,8 @@
     "and": "and",
     "login": "Sign In",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "inputOrScan": "Please enter or scan..."
   },
 
   "pages": {
@@ -48,6 +49,19 @@
       "normalMode": "Normal Mode",
       "darkMode": "Dark Mode",
       "language": "Language"
+    },
+    "production-report": {
+      "title": "Production Report"
+    },
+    "device": {
+      "title": "Device Management",
+
+      "details": {
+        "title": "Device Details"
+      }
+    },
+    "abnormal-call": {
+      "title": "Abnormal Call"
     }
   }
 }
