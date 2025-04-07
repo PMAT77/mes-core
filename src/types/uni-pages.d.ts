@@ -12,6 +12,7 @@ interface NavigateToOptions {
        "/pages/mine/index" |
        "/pages/production-report/index" |
        "/pages/device/details/index" |
+       "/pages/mine/print/index" |
        "/pages/mine/settings/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}

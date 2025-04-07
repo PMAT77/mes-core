@@ -2,8 +2,8 @@
 <route lang="json5" type="home">
 {
   style: {
-    navigationStyle: "custom",
-    navigationBarTitleText: "首页",
+    navigationStyle: 'custom',
+    navigationBarTitleText: '首页',
   },
 }
 </route>
@@ -19,50 +19,26 @@
     <template #header>
       <view
         class="flex items-end min-h-300rpx !mx--4"
-        style="
-          background-image: linear-gradient(
-            140deg,
-            #0c3483 0%,
-            #6b8cce 100%,
-            #a2b6df 10%
-          );
-        "
+        style="background-image: linear-gradient(140deg, #0c3483 0%, #6b8cce 100%, #a2b6df 10%)"
       >
-        <view
-          class="flex w-full justify-between items-center box-border px-68rpx pb-30rpx"
-        >
-          <view
-            class="flex flex-col gap-20rpx flex-grow-1 justify-end h-80px color-#fff"
-          >
+        <view class="flex w-full justify-between items-center box-border px-68rpx pb-30rpx">
+          <view class="flex flex-col gap-20rpx flex-grow-1 justify-end h-80px color-#fff">
             <view class="flex items-center w-full font-size-38rpx">
-              {{ dayjs(new Date()).format("YYYY-MM-DD") }}
+              {{ dayjs(new Date()).format('YYYY-MM-DD') }}
             </view>
-            <view class="font-size-28rpx"
-              >Hello！{{ userStore.userInfo.realname }}，你好！</view
-            >
+            <view class="font-size-28rpx">Hello！{{ userStore.userInfo.realname }}，你好！</view>
           </view>
 
-          <image
-            src="/static/svgs/factory.svg"
-            mode="scaleToFill"
-            class="h-80px w-80px"
-          />
+          <image src="/static/svgs/factory.svg" mode="scaleToFill" class="h-80px w-80px" />
         </view>
       </view>
     </template>
 
     <view class="text-center">
       <wd-card class="!m-0 !pt-48rpx !pb-12rpx !rounded-0">
-        <z-swiper
-          grabCursor
-          :pagination="{ dynamicBullets: true }"
-          :modules="modules"
-        >
+        <z-swiper grabCursor :pagination="{ dynamicBullets: true }" :modules="modules">
           <z-swiper-item v-for="(menus, index) in menusList" :key="index">
-            <view
-              v-if="!loading"
-              class="w-full pb-24rpx flex flex-wrap items-center"
-            >
+            <view v-if="!loading" class="w-full pb-24rpx flex flex-wrap items-center">
               <view
                 v-for="menu in menus"
                 :key="menu.id"
@@ -76,16 +52,11 @@
                     :src="`/static/svgs/${menu.meta.icon}.svg`"
                   />
                 </view>
-                <view class="mt-4rpx font-size-22rpx">{{
-                  menu.meta.title
-                }}</view>
+                <view class="mt-4rpx font-size-22rpx">{{ menu.meta.title }}</view>
               </view>
             </view>
 
-            <view
-              v-if="loading"
-              class="w-full pb-24rpx flex flex-wrap justify-center items-center"
-            >
+            <view v-if="loading" class="w-full pb-24rpx flex flex-wrap justify-center items-center">
               <wd-skeleton
                 class="w-90% mb-68rpx"
                 animation="flashed"
@@ -118,17 +89,13 @@
           class="block-title flex justify-between items-center mt-20rpx"
           @click="onToPage('/production-report/index')"
         >
-          <wd-text text="报工管理" size="28rpx" class="text-color-3" />
+          <wd-text text="派工列表" size="28rpx" class="text-color-3" />
           <view class="i-carbon:chevron-right" />
         </view>
 
         <wd-card v-for="(item, index) in dataList" :key="index">
           <template #title>
-            <card-status-title
-              :title="item.workNum"
-              status-text="进行中"
-              status-color="#498b45"
-            />
+            <card-status-title :title="item.workNum" status-text="进行中" status-color="#498b45" />
           </template>
 
           <view class="flex flex-col gap-20rpx !pb-30rpx font-size-24rpx">
@@ -142,10 +109,7 @@
             <mb-text prefix="生产工单号：" :text="item.prodOrderNum" />
             <mb-text prefix="作业日期：" :text="item.workDate" />
             <mb-text prefix="所在车间：" :text="item.workshopName" />
-            <wd-text
-              prefix="计划数量："
-              :text="`${item.plannedQuantity} ${item.unitName}`"
-            />
+            <wd-text prefix="计划数量：" :text="`${item.plannedQuantity} ${item.unitName}`" />
             <mb-text prefix="创建时间：" :text="item.createTime" />
           </view>
         </wd-card>
@@ -155,70 +119,70 @@
 </template>
 
 <script lang="ts" setup>
-import type { PermissionData } from "@/service/app";
-import { useMenuStore, useUserStore } from "@/store";
-import useZPaging from "@/uni_modules/z-paging/components/z-paging/js/hooks/useZPaging";
-import { Pagination } from "@/uni_modules/zebra-swiper/modules";
-import { httpGet } from "@/utils/http";
-import { onPageScroll, onReachBottom } from "@dcloudio/uni-app";
-import dayjs from "dayjs";
+import type { PermissionData } from '@/service/app'
+import { useMenuStore, useUserStore } from '@/store'
+import useZPaging from '@/uni_modules/z-paging/components/z-paging/js/hooks/useZPaging'
+import { Pagination } from '@/uni_modules/zebra-swiper/modules'
+import { httpGet } from '@/utils/http'
+import { onPageScroll, onReachBottom } from '@dcloudio/uni-app'
+import dayjs from 'dayjs'
 
 defineOptions({
-  name: "Home",
-});
+  name: 'Home',
+})
 
-const userStore = useUserStore();
-const menuStore = useMenuStore();
+const userStore = useUserStore()
+const menuStore = useMenuStore()
 
 // ZSwiper 轮播配置
-const modules = ref([Pagination]);
+const modules = ref([Pagination])
 
 // ZPaging
-const paging = ref(null);
+const paging = ref(null)
 
+/* ！！！请勿删除以下条件判断内的注释 */
 // #ifdef APP-PLUS
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const pagingHeight = ref("calc(100vh - 309.14px)");
+const pagingHeight = ref('calc(100vh - 309.14px)')
 // #endif
 
 // #ifndef APP-PLUS
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-const pagingHeight = ref("calc(100vh - 359.14px)");
+const pagingHeight = ref('calc(100vh - 359.14px)')
 // #endif
+/* ！！！ */
 
-useZPaging(paging);
+useZPaging(paging)
 
 // 首页菜单列表
-const menusList = ref([]);
+const menusList = ref([])
 
 // 骨架屏配置
 const skeletonGrid = ref([
   [
-    { width: "48px", height: "48px" },
-    { width: "48px", height: "48px" },
-    { width: "48px", height: "48px" },
-    { width: "48px", height: "48px" },
+    { width: '48px', height: '48px' },
+    { width: '48px', height: '48px' },
+    { width: '48px', height: '48px' },
+    { width: '48px', height: '48px' },
   ],
-]);
+])
 
 // 首页列表数据
-const dataList = ref([]);
+const dataList = ref([])
 
 // 用户菜单、权限请求
 const {
   loading,
   data,
   run: getUserPermission,
-} = useRequest<PermissionData>(() =>
-  httpGet("/dev/sys/permission/getUserPermissionByToken"),
-);
+} = useRequest<PermissionData>(() => httpGet('/dev/sys/permission/getUserPermissionByToken'))
 
 const { data: orderData, run: getProductionOrder } = useRequest<any>(() =>
-  httpGet("/dev/production/mesDispatchList/list"),
-);
+  httpGet('/dev/production/mesDispatchList/list'),
+)
 
 /**
  * @method 工单列表-加载更多
@@ -226,50 +190,47 @@ const { data: orderData, run: getProductionOrder } = useRequest<any>(() =>
 const queryList = (pageNo, pageSize) => {
   getProductionOrder()
     .then((res) => {
-      console.log(res);
-      paging.value.complete(orderData.value.records);
+      console.log(res)
+      paging.value.complete(orderData.value.records)
     })
     .catch((err) => {
-      console.log("工单列表加载错误", err);
-      paging.value.complete(false);
-    });
-};
+      console.log('工单列表加载错误', err)
+      paging.value.complete(false)
+    })
+}
 
 /**
  * @method 获取菜单列表
  */
 async function getMenus() {
-  await getUserPermission();
-  console.log("Permission", data.value); // 打印接口数据
-  const mobileMenu =
-    data.value.menu?.find((item: any) => item.name === "mobile")?.children ||
-    [];
-  menuStore.setMenus(mobileMenu);
-  console.log("Menus", menuStore.menus); // 打印菜单数据
+  await getUserPermission()
+  console.log('Permission', data.value) // 打印接口数据
+  const mobileMenu = data.value.menu?.find((item: any) => item.name === 'mobile')?.children || []
+  menuStore.setMenus(mobileMenu)
+  console.log('Menus', menuStore.menus) // 打印菜单数据
 
-  const chunkSize = 4; // 轮播菜单分块大小
+  const chunkSize = 4 // 轮播菜单分块大小
   const chunkedMenus = Array.from(
     { length: Math.ceil(menuStore.menus.length / chunkSize) },
-    (_, index) =>
-      menuStore.menus.slice(index * chunkSize, (index + 1) * chunkSize),
-  );
+    (_, index) => menuStore.menus.slice(index * chunkSize, (index + 1) * chunkSize),
+  )
 
-  menusList.value = chunkedMenus;
+  menusList.value = chunkedMenus
 }
 
 function onToPage(path: string) {
-  console.log("onToPage", path);
+  console.log('onToPage', path)
   uni.navigateTo({
     url: `/pages${path}`,
-  });
+  })
 }
 
 onShow(async () => {
-  await getMenus();
-});
+  await getMenus()
+})
 
-onPageScroll(() => {});
-onReachBottom(() => {});
+onPageScroll(() => {})
+onReachBottom(() => {})
 </script>
 
 <style lang="scss">

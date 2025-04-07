@@ -97,6 +97,7 @@
     "useId": true,
     "useModel": true,
     "useTemplateRef": true,
-    "useRoute": true
+    "useRoute": true,
+    "useBluetoothPrinter": true
   }
 }

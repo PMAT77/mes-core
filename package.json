@@ -22,9 +22,6 @@
     "node": ">=18",
     "pnpm": ">=7.30"
   },
-  "prettier": {
-    "ignorePath": ".prettierignore"
-  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "uvm": "npx @dcloudio/uvm@latest",

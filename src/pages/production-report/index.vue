@@ -1,8 +1,8 @@
 <route lang="json5" type="page">
 {
-  layout: "default",
+  layout: 'default',
   style: {
-    navigationBarTitleText: "生产报工",
+    navigationBarTitleText: '生产报工',
   },
 }
 </route>
@@ -39,10 +39,7 @@
             @clear="debouncedFn"
           >
             <template #suffix>
-              <view
-                class="i-carbon:scan-alt w-20px h-20px ml-14rpx"
-                @click="onScan"
-              />
+              <view class="i-carbon:scan-alt w-20px h-20px ml-14rpx" @click="onScan" />
             </template>
           </wd-input>
         </view>
@@ -70,10 +67,7 @@
           <mb-text prefix="生产工单号：" :text="item.prodOrderNum" />
           <mb-text prefix="作业日期：" :text="item.workDate" />
           <mb-text prefix="所在车间：" :text="item.workshopName" />
-          <wd-text
-            prefix="计划数量："
-            :text="`${item.plannedQuantity} ${item.unitName}`"
-          />
+          <wd-text prefix="计划数量：" :text="`${item.plannedQuantity} ${item.unitName}`" />
           <mb-text prefix="创建时间：" :text="item.createTime" />
         </view>
       </wd-card>
@@ -82,44 +76,44 @@
 </template>
 
 <script lang="ts" setup>
-import { t } from "@/locale/index";
-import { httpGet } from "@/utils/http";
-import { useDebounceFn } from "@vueuse/core";
+import { t } from '@/locale/index'
+import { httpGet } from '@/utils/http'
+import { useDebounceFn } from '@vueuse/core'
 
 // ZPaging
-const paging = ref(null);
+const paging = ref(null)
 
 // 首页列表数据
-const dataList = ref([]);
+const dataList = ref([])
 
 // 搜索框内容
-const searchValue = ref("");
+const searchValue = ref('')
 
 /**
  * @method 请求分页数据
  */
 function queryList(pageNo, pageSize) {
-  console.log(pageNo, pageSize);
+  console.log(pageNo, pageSize)
   const { data: orderData, run: getProductionOrder } = useRequest<any>(() =>
-    httpGet<any>("/dev/production/mesDispatchList/list", {
+    httpGet<any>('/dev/production/mesDispatchList/list', {
       workNum: `*${searchValue.value}*`,
       pageNo,
       pageSize,
     }),
-  );
+  )
 
   getProductionOrder()
     .then(() => {
-      paging.value.complete(orderData.value.records);
+      paging.value.complete(orderData.value.records)
     })
     .catch((err) => {
-      console.log("工单列表加载错误", err);
-      paging.value.complete(false);
-    });
+      console.log('工单列表加载错误', err)
+      paging.value.complete(false)
+    })
 }
 
 // 搜索防抖
-const debouncedFn = useDebounceFn(() => paging.value.reload(), 300);
+const debouncedFn = useDebounceFn(() => paging.value.reload(), 300)
 
 /**
  * @method 调用相机扫码
@@ -127,11 +121,11 @@ const debouncedFn = useDebounceFn(() => paging.value.reload(), 300);
 function onScan() {
   uni.scanCode({
     success: (res) => {
-      console.log(res.result);
-      searchValue.value = res.result;
-      paging.value.reload();
+      console.log(res.result)
+      searchValue.value = res.result
+      paging.value.reload()
     },
-  });
+  })
 }
 </script>
 

@@ -1,9 +1,8 @@
 <route lang="json5" type="page">
 {
-  layout: "default",
+  layout: 'default',
   style: {
-    navigationBarTitleText: "设备管理",
-    navigationStyle: "custom",
+    navigationBarTitleText: '设备管理',
   },
 }
 </route>
@@ -21,8 +20,6 @@
       v-model="dataList"
       safe-area-inset-bottom
       back-to-top-bottom="40rpx"
-      height="calc(100vh - 44px)"
-      :fixed="false"
       :auto-show-back-to-top="true"
       :auto="true"
       :concat="true"
@@ -42,20 +39,13 @@
             @clear="debouncedFn"
           >
             <template #suffix>
-              <view
-                class="i-carbon:scan-alt w-20px h-20px ml-14rpx"
-                @click="onScan"
-              />
+              <view class="i-carbon:scan-alt w-20px h-20px ml-14rpx" @click="onScan" />
             </template>
           </wd-input>
         </view>
       </template>
 
-      <wd-card
-        v-for="(item, index) in dataList"
-        :key="index"
-        @click="onToDetails(item.id)"
-      >
+      <wd-card v-for="(item, index) in dataList" :key="index" @click="onToDetails(item.id)">
         <template #title>
           <card-status-title
             :status-text="item.status_dictText"
@@ -64,9 +54,7 @@
             <template #title>
               <view class="flex items-end gap-14rpx">
                 <wd-text :text="item.equipmentName" size="28rpx" />
-                <view class="font-size-24rpx text-color-4">{{
-                  item.equipmentCode
-                }}</view>
+                <view class="font-size-24rpx text-color-4">{{ item.equipmentCode }}</view>
               </view>
             </template>
           </card-status-title>
@@ -104,53 +92,50 @@
 </template>
 
 <script lang="ts" setup>
-import { t } from "@/locale/index";
-import { useAuthStore } from "@/store";
-import { httpGet } from "@/utils/http";
-import { useDebounceFn } from "@vueuse/core";
+import { t } from '@/locale/index'
+import { useAuthStore } from '@/store'
+import { httpGet } from '@/utils/http'
+import { useDebounceFn } from '@vueuse/core'
 
-const { dicts } = useAuthStore();
+const { dicts } = useAuthStore()
 const deviceColor = (value: string) => {
-  return (
-    dicts.equipment_operator_result?.find((item) => item.value === value)
-      ?.color || "#ffffff"
-  );
-};
+  return dicts.equipment_operator_result?.find((item) => item.value === value)?.color || '#ffffff'
+}
 
 // ZPaging
-const paging = ref(null);
+const paging = ref(null)
 
 // 首页列表数据
-const dataList = ref([]);
+const dataList = ref([])
 
 // 搜索框内容
-const searchValue = ref("");
+const searchValue = ref('')
 
 /**
  * @method 请求分页数据
  */
 function queryList(pageNo, pageSize) {
-  console.log(pageNo, pageSize);
+  console.log(pageNo, pageSize)
   const { data: orderData, run: getDeviceList } = useRequest<any>(() =>
-    httpGet<any>("/dev/equipment/mesEquipment/list", {
+    httpGet<any>('/dev/equipment/mesEquipment/list', {
       equipmentCode: `*${searchValue.value}*`,
       pageNo,
       pageSize,
     }),
-  );
+  )
 
   getDeviceList()
     .then(() => {
-      paging.value.complete(orderData.value.records);
+      paging.value.complete(orderData.value.records)
     })
     .catch((err) => {
-      console.log("工单列表加载错误", err);
-      paging.value.complete(false);
-    });
+      console.log('工单列表加载错误', err)
+      paging.value.complete(false)
+    })
 }
 
 // 搜索防抖
-const debouncedFn = useDebounceFn(() => paging.value.reload(), 300);
+const debouncedFn = useDebounceFn(() => paging.value.reload(), 300)
 
 /**
  * @method 调用相机扫码
@@ -158,11 +143,11 @@ const debouncedFn = useDebounceFn(() => paging.value.reload(), 300);
 function onScan() {
   uni.scanCode({
     success: (res) => {
-      console.log(res.result);
-      searchValue.value = res.result;
-      paging.value.reload();
+      console.log(res.result)
+      searchValue.value = res.result
+      paging.value.reload()
     },
-  });
+  })
 }
 
 /**
@@ -171,7 +156,7 @@ function onScan() {
 function onToDetails(id: string) {
   uni.navigateTo({
     url: `/pages/device/details/index?id=${id}`,
-  });
+  })
 }
 </script>
 

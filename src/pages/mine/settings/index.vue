@@ -8,10 +8,13 @@
 </route>
 
 <template>
-  <PageContainer min-height="100vh" :padding="false">
+  <PageContainer min-height="100vh" :statusBar="true" :tabbar="false" :padding="false">
     <view class="mt-15px mb-15px">
       <wd-cell-group>
-        <wd-cell :title="t('pages.settings.automatic')" :label="t('pages.settings.automaticLabel')">
+        <wd-cell
+          :title="t('pages.mine_settings.automatic')"
+          :label="t('pages.mine_settings.automaticLabel')"
+        >
           <wd-switch v-model="appStore.autoTheme" active-color="#57bd6a" size="24px" disabled />
         </wd-cell>
       </wd-cell-group>
@@ -19,17 +22,17 @@
 
     <view v-if="!appStore.autoTheme" class="mt-15px mb-15px">
       <view class="px-2 font-size-24rpx pt-10px pb-10px pl-15px pr-15px text-color-3">
-        {{ t('pages.settings.manualSelection') }}
+        {{ t('pages.mine_settings.manualSelection') }}
       </view>
       <wd-radio-group v-model="appStore.theme" cell>
-        <wd-radio value="light">{{ t('pages.settings.normalMode') }}</wd-radio>
-        <wd-radio value="dark">{{ t('pages.settings.darkMode') }}</wd-radio>
+        <wd-radio value="light">{{ t('pages.mine_settings.normalMode') }}</wd-radio>
+        <wd-radio value="dark">{{ t('pages.mine_settings.darkMode') }}</wd-radio>
       </wd-radio-group>
     </view>
 
     <view class="mt-15px mb-15px">
       <view class="px-2 font-size-24rpx pt-10px pb-10px pl-15px pr-15px text-color-3">
-        {{ t('pages.settings.language') }}
+        {{ t('pages.mine_settings.language') }}
       </view>
       <wd-radio-group v-model="appStore.locale" cell>
         <wd-radio value="zh-Hans">简体中文</wd-radio>

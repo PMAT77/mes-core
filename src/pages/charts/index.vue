@@ -46,7 +46,7 @@ const getServerData = () => {
   }, 500)
 }
 
-onReady(async () => {
+onShow(async () => {
   await getServerData()
 })
 </script>

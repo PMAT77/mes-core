@@ -37,11 +37,10 @@
         "year": "Year Report"
       },
       "more": "More Features",
-      "settings": "Settings",
       "logout": "Logout",
       "sureLogout": "Are you sure you want to log out?"
     },
-    "settings": {
+    "mine_settings": {
       "title": "Settings",
       "automatic": "Automatic",
       "automaticLabel": "Automatically switch themes",
@@ -49,6 +48,9 @@
       "normalMode": "Normal Mode",
       "darkMode": "Dark Mode",
       "language": "Language"
+    },
+    "mine_print": {
+      "title": "Print"
     },
     "production-report": {
       "title": "Production Report"
