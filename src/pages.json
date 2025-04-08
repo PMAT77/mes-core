@@ -23,18 +23,18 @@
     "spacing": "3px",
     "list": [
       {
-        "iconPath": "static/tabbar/home.svg",
-        "selectedIconPath": "static/tabbar/homeHL.svg",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/homeHL.png",
         "pagePath": "pages/home/index"
       },
       {
-        "iconPath": "static/tabbar/charts.svg",
-        "selectedIconPath": "static/tabbar/chartsHL.svg",
+        "iconPath": "static/tabbar/charts.png",
+        "selectedIconPath": "static/tabbar/chartsHL.png",
         "pagePath": "pages/charts/index"
       },
       {
-        "iconPath": "static/tabbar/mine.svg",
-        "selectedIconPath": "static/tabbar/mineHL.svg",
+        "iconPath": "static/tabbar/mine.png",
+        "selectedIconPath": "static/tabbar/mineHL.png",
         "pagePath": "pages/mine/index"
       }
     ]

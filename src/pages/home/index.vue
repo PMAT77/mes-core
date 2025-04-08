@@ -40,7 +40,7 @@
           <z-swiper-item v-for="(menus, index) in menusList" :key="index">
             <view v-if="!loading" class="w-full pb-24rpx flex flex-wrap items-center">
               <view
-                v-for="menu in menus"
+                v-for="(menu, i) in menus"
                 :key="menu.id"
                 class="flex flex-col items-center mb-24rpx gap-8rpx w-25%"
                 @click="onToPage(menu.path)"
@@ -49,8 +49,9 @@
                   <image
                     mode="scaleToFill"
                     class="h-32px w-32px"
-                    :src="`/static/svgs/${menu.meta.icon}.svg`"
+                    :src="`/static/svgs/${getIcon(index, i)}.svg`"
                   />
+                  <!-- <view class="h-32px w-32px text-amber i-carbon:accessibility-alt"></view> -->
                 </view>
                 <view class="mt-4rpx font-size-22rpx">{{ menu.meta.title }}</view>
               </view>
@@ -160,6 +161,11 @@ useZPaging(paging)
 // 首页菜单列表
 const menusList = ref([])
 
+const iconsList = [
+  ['menuProductReport', 'menuProductReceive', 'menuDevice', 'menuMaintenance'],
+  ['menuRepair', 'menuAbnormalCall'],
+]
+
 // 骨架屏配置
 const skeletonGrid = ref([
   [
@@ -173,7 +179,12 @@ const skeletonGrid = ref([
 // 首页列表数据
 const dataList = ref([])
 
-// 用户菜单、权限请求
+/* 获取菜单图标 */
+function getIcon(index: number, i: number) {
+  return iconsList[index][i]
+}
+
+/* 用户菜单、权限请求 */
 const {
   loading,
   data,
