@@ -94,9 +94,9 @@ export const usePrintStore = defineStore(
       }
     }
 
-    const selectDevice = (selectedDeviceId: number) => {
-      device.value = deviceList.value.find((item) => item.uuids === selectedDeviceId)
-      uni.showToast({ title: `已选择：${device.value.name}`, icon: 'none' })
+    const selectDevice = (selectedDeviceAddress: string) => {
+      device.value = deviceList.value.find((item) => item.address === selectedDeviceAddress)
+      uni.showToast({ title: `已选择：${device.value}`, icon: 'none' })
     }
 
     return {

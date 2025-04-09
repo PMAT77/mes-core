@@ -10,8 +10,8 @@ interface UUID {
 }
 
 /* 使用蓝牙打印 */
-export function useBluetoothPrinter() {
-  const device = ref(null)
+export function useBluetoothPrinter(device) {
+  // const device = ref(null)
   const isPrinting = ref(false)
 
   const printSomething = async (sb: (outputStream: any) => Promise<void>) => {

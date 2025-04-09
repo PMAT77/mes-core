@@ -18,12 +18,19 @@
         :columns="deviceColumns"
         :show-confirm="false"
         @change="handleDeviceChange"
-      ></wd-select-picker>
+      />
+
+      <view class="flex justify-center pt-24rpx px-24rpx">
+        <wd-button class="w-full" :round="false" type="info" @click="printTestLabel">
+          测试打印
+        </wd-button>
+      </view>
     </view>
   </PageContainer>
 </template>
 
 <script lang="ts" setup>
+import { printService } from '@/hooks/usePrint'
 import { usePrintStore } from '@/store'
 
 const printStore = usePrintStore()
@@ -31,14 +38,37 @@ const printStore = usePrintStore()
 const deviceColumns = computed(() =>
   printStore.deviceList.map((item) => ({
     label: item.name,
-    value: item.uuids,
-    disabled: item.uuids === -1,
+    value: item.address,
+    disabled: item.address === '9527',
   })),
 )
 
 function handleDeviceChange({ value }) {
   console.log('改变了')
   printStore.selectDevice(value)
+}
+
+// 打印测试标签
+const printTestLabel = async () => {
+  try {
+    const config = {
+      printerType: '2',
+      macAddress: printStore.device.address,
+    }
+    const testData = {
+      /* 测试数据 */
+      name: '测试',
+    }
+    const template = printService.generateLabelTemplate(testData, 'Y')
+
+    if (config.printerType === '2') {
+      await printService.print(config.macAddress!, template)
+    } else {
+      // WiFi打印逻辑
+    }
+  } catch (error) {
+    uni.showModal({ title: '打印失败', content: error.message })
+  }
 }
 
 onShow(() => {

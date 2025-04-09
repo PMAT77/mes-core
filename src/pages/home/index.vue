@@ -18,7 +18,8 @@
   >
     <template #header>
       <view
-        class="flex items-end min-h-300rpx !mx--4"
+        ref="headerRef"
+        class="header flex items-end min-h-300rpx !mx--4"
         style="background-image: linear-gradient(140deg, #0c3483 0%, #6b8cce 100%, #a2b6df 10%)"
       >
         <view class="flex w-full justify-between items-center box-border px-68rpx pb-30rpx">
@@ -34,7 +35,7 @@
       </view>
     </template>
 
-    <view class="text-center">
+    <view ref="menuRef" class="menus text-center">
       <wd-card class="!m-0 !pt-48rpx !pb-12rpx !rounded-0">
         <z-swiper grabCursor :pagination="{ dynamicBullets: true }" :modules="modules">
           <z-swiper-item v-for="(menus, index) in menusList" :key="index">
@@ -135,6 +136,12 @@ defineOptions({
 const userStore = useUserStore()
 const menuStore = useMenuStore()
 
+const headerRef = ref<ComponentPublicInstance | null>(null)
+const headerHeight = ref(0)
+
+const menuRef = ref<ComponentPublicInstance | null>(null)
+const menuHeight = ref(0)
+
 // ZSwiper 轮播配置
 const modules = ref([Pagination])
 
@@ -145,14 +152,14 @@ const paging = ref(null)
 // #ifdef APP-PLUS
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const pagingHeight = ref('calc(100vh - 309.14px)')
+const pagingHeight = computed(() => `calc(100vh - ${headerHeight.value + menuHeight.value}px)`)
 // #endif
 
 // #ifndef APP-PLUS
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-const pagingHeight = ref('calc(100vh - 359.14px)')
+const pagingHeight = computed(() => `calc(100vh - ${headerHeight.value + menuHeight.value + 50}px)`)
 // #endif
 /* ！！！ */
 
@@ -238,6 +245,29 @@ function onToPage(path: string) {
 
 onShow(async () => {
   await getMenus()
+
+  const query = uni.createSelectorQuery().in(this)
+  nextTick(() => {
+    query
+      .select('.header') // 替换为实际的类名或选择器
+      .boundingClientRect((rect: any) => {
+        if (rect) {
+          headerHeight.value = rect.height
+          console.log('headerHeight', headerHeight.value)
+        }
+      })
+      .exec()
+
+    query
+      .select('.menus') // 替换为实际的类名或选择器
+      .boundingClientRect((rect: any) => {
+        if (rect) {
+          menuHeight.value = rect.height
+          console.log('menuHeight', menuHeight.value)
+        }
+      })
+      .exec()
+  })
 })
 
 onPageScroll(() => {})

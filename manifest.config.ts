@@ -41,7 +41,11 @@ export default defineManifestConfig({
       delay: 0,
     },
     /* 模块配置 */
-    modules: {},
+    modules: {
+      Bluetooth: {
+        enable: true,
+      },
+    },
     /* 应用发布信息 */
     distribute: {
       /* android打包配置 */
@@ -65,6 +69,9 @@ export default defineManifestConfig({
           '<uses-permission android:name="android.permission.FLASHLIGHT"/>',
           '<uses-feature android:name="android.hardware.camera"/>',
           '<uses-permission android:name="android.permission.WRITE_SETTINGS"/>',
+          '<uses-permission android:name="android.permission.BLUETOOTH"/>',
+          '<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>',
+          '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>',
         ],
       },
       /* ios打包配置 */

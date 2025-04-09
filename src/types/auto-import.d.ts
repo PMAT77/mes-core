@@ -6,6 +6,11 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const GetValueOrEmpty: typeof import('../hooks/usePrint')['GetValueOrEmpty']
+  const IsNullOrEmpty: typeof import('../hooks/usePrint')['IsNullOrEmpty']
+  const PrinterIsReady: typeof import('../hooks/usePrint')['PrinterIsReady']
+  const PrinterIsReady_ble: typeof import('../hooks/usePrint')['PrinterIsReady_ble']
+  const checkPrinterReady: typeof import('../hooks/usePrint')['checkPrinterReady']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -14,6 +19,12 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const get_print_ble_demostr: typeof import('../hooks/usePrint')['get_print_ble_demostr']
+  const get_printer_ip: typeof import('../hooks/usePrint')['get_printer_ip']
+  const get_printer_type: typeof import('../hooks/usePrint')['get_printer_type']
+  const get_printstr: typeof import('../hooks/usePrint')['get_printstr']
+  const getstr: typeof import('../hooks/usePrint')['getstr']
+  const getstr_xq: typeof import('../hooks/usePrint')['getstr_xq']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
   const isProxy: typeof import('vue')['isProxy']
@@ -60,11 +71,22 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
+  const print: typeof import('../hooks/usePrint')['print']
+  const printService: typeof import('../hooks/usePrint')['printService']
+  const printSocket: typeof import('../hooks/usePrint')['printSocket']
+  const printTest: typeof import('../hooks/usePrint')['printTest']
+  const print_barode: typeof import('../hooks/usePrint')['print_barode']
+  const print_barode_s: typeof import('../hooks/usePrint')['print_barode_s']
+  const print_ble: typeof import('../hooks/usePrint')['print_ble']
+  const print_ble_test: typeof import('../hooks/usePrint')['print_ble_test']
+  const print_label_ble: typeof import('../hooks/usePrint')['print_label_ble']
+  const print_label_s_ble: typeof import('../hooks/usePrint')['print_label_s_ble']
   const provide: typeof import('vue')['provide']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const resolveComponent: typeof import('vue')['resolveComponent']
+  const set_printer_ip: typeof import('../hooks/usePrint')['set_printer_ip']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -158,6 +180,7 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
+    readonly printService: UnwrapRef<typeof import('../hooks/usePrint')['printService']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
