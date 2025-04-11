@@ -120,6 +120,7 @@
     "print_label_s_ble": true,
     "set_printer_ip": true,
     "checkPrinterReady": true,
-    "printService": true
+    "printService": true,
+    "usePrint": true
   }
 }

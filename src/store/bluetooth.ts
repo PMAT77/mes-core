@@ -9,7 +9,7 @@ export interface BluetoothDevice {
   op: string
 }
 
-export const usePrintStore = defineStore(
+export const useBluetoothStore = defineStore(
   'Print',
   () => {
     const device = ref<BluetoothDevice>({
@@ -50,7 +50,7 @@ export const usePrintStore = defineStore(
       ]
     }
 
-    /* 初始化打印设备列表 */
+    /* 初始化蓝牙设备列表 */
     const initPrinter = () => {
       try {
         // 清空旧数据
@@ -96,7 +96,7 @@ export const usePrintStore = defineStore(
 
     const selectDevice = (selectedDeviceAddress: string) => {
       device.value = deviceList.value.find((item) => item.address === selectedDeviceAddress)
-      uni.showToast({ title: `已选择：${device.value}`, icon: 'none' })
+      uni.showToast({ title: `已选择：${device.value.name}`, icon: 'none' })
     }
 
     return {

@@ -103,6 +103,7 @@ declare global {
   const useId: typeof import('vue')['useId']
   const useModel: typeof import('vue')['useModel']
   const useNavbarWeixin: (typeof import('../hooks/useNavbarWeixin'))['default']
+  const usePrint: typeof import('../hooks/usePrint')['usePrint']
   const useRequest: typeof import('../hooks/useRequest')['default']
   const useRoute: typeof import('../hooks/useRoute')['default']
   const useSlots: typeof import('vue')['useSlots']
@@ -180,7 +181,6 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
-    readonly printService: UnwrapRef<typeof import('../hooks/usePrint')['printService']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
@@ -196,11 +196,11 @@ declare module 'vue' {
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useBluetoothPrinter: UnwrapRef<typeof import('../hooks/useBluetooth')['useBluetoothPrinter']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
+    readonly usePrint: UnwrapRef<typeof import('../hooks/usePrint')['usePrint']>
     readonly useRequest: UnwrapRef<typeof import('../hooks/useRequest')['default']>
     readonly useRoute: UnwrapRef<typeof import('../hooks/useRoute')['default']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
