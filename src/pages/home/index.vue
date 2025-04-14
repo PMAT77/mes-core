@@ -77,6 +77,7 @@
         v-model="dataList"
         safe-area-inset-bottom
         back-to-top-bottom="0rpx"
+        show-loading-more-when-reload
         :auto-show-back-to-top="true"
         :height="pagingHeight"
         :fixed="false"
@@ -267,6 +268,8 @@ onShow(async () => {
         }
       })
       .exec()
+
+    paging.value.reload()
   })
 })
 

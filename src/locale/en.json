@@ -52,6 +52,11 @@
     "mine_print": {
       "title": "Print"
     },
+    "mine_developers": {
+      "title": "Developers",
+      "isMock": "Mock Data",
+      "mockDataLabel": "Simulated data will be used"
+    },
     "production-report": {
       "title": "Production Report"
     },

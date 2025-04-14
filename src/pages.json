@@ -105,6 +105,14 @@
       }
     },
     {
+      "path": "pages/mine/developers/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "开发者设置"
+      }
+    },
+    {
       "path": "pages/mine/print/index",
       "type": "page",
       "layout": "default",

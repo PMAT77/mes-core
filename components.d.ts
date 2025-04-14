@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CardStatusTitle: typeof import('./src/components/custom/card-status-title/index.vue')['default']
+    MbApiSelect: typeof import('./src/components/common/mb-api-select/index.vue')['default']
     MbText: typeof import('./src/components/common/mb-text/index.vue')['default']
     PageContainer: typeof import('./src/components/common/page-container/index.vue')['default']
     RingCharts: typeof import('./src/components/custom/ring-charts/index.vue')['default']

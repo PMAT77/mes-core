@@ -53,19 +53,20 @@
         custom-footer-class="!p-0"
         :title="t('pages.mine.more')"
       >
-        <wd-cell
-          v-for="(item, index) in cellList"
-          custom-class="!pl-20rpx"
-          custom-title-class="!pl-10rpx"
-          is-link
-          :to="item.to"
-          :key="index"
-          :title="item.title"
-        >
-          <template #icon>
-            <view class="m-auto" :class="item.icon"></view>
-          </template>
-        </wd-cell>
+        <template v-for="(item, index) in cellList" :key="index">
+          <wd-cell
+            custom-class="!pl-20rpx"
+            custom-title-class="!pl-10rpx"
+            is-link
+            :to="item.to"
+            :title="item.title"
+            v-if="item.show"
+          >
+            <template #icon>
+              <view class="m-auto" :class="item.icon"></view>
+            </template>
+          </wd-cell>
+        </template>
       </wd-card>
     </view>
 
@@ -86,6 +87,8 @@ const userStore = useUserStore()
 const authStore = useAuthStore()
 const message = useMessage()
 
+const isDevEnv = import.meta.env.VITE_NODE_ENV === 'development'
+
 const countToRefs = ref()
 
 const data = computed(() => [
@@ -100,8 +103,20 @@ const cellList = computed(() => [
     title: t('pages.mine_settings.title'),
     icon: 'i-carbon:settings',
     to: '/pages/mine/settings/index',
+    show: true,
   },
-  { title: t('pages.mine_print.title'), icon: 'i-carbon:printer', to: '/pages/mine/print/index' },
+  {
+    title: t('pages.mine_print.title'),
+    icon: 'i-carbon:printer',
+    to: '/pages/mine/print/index',
+    show: true,
+  },
+  {
+    title: t('pages.mine_developers.title'),
+    icon: 'i-carbon:carbon-for-ibm-product',
+    to: '/pages/mine/developers/index',
+    show: isDevEnv,
+  },
 ])
 
 function handleLogout() {

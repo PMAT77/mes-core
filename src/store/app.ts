@@ -13,6 +13,8 @@ export const useAppStore = defineStore(
     const autoTheme = ref(false)
     // 当前语言
     const locale = ref(uni.getLocale() || 'zh-Hans')
+    // 是否开启mock
+    const mockEnabled = ref(false)
 
     /* 获取当前系统主题 */
     const getTheme = () => {
@@ -98,6 +100,10 @@ export const useAppStore = defineStore(
       })
     }
 
+    const changeMockEnabled = () => {
+      mockEnabled.value = !mockEnabled.value
+    }
+
     watch(
       () => locale.value,
       (val) => {
@@ -119,6 +125,9 @@ export const useAppStore = defineStore(
       getLocale,
       setLocale,
       initLocale,
+
+      mockEnabled,
+      changeMockEnabled,
     }
   },
   {

@@ -52,6 +52,11 @@
     "mine_print": {
       "title": "蓝牙打印"
     },
+    "mine_developers": {
+      "title": "开发者设置",
+      "isMock": "Mock数据",
+      "mockDataLabel": "开启后将使用模拟数据"
+    },
     "production-report": {
       "title": "生产报工"
     },
